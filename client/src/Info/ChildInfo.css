@@ -1,0 +1,55 @@
+.child-component {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    margin: 10px;
+    overflow: hidden;
+    width: 100%;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+
+.child-component.left {
+    flex-direction: row; /* Photo on the left */
+  }
+
+  .child-component.right {
+    flex-direction: row-reverse; /* Photo on the right */
+  }
+
+  .child-component .image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    transition: background-color 0.3s ease;
+  }
+
+  .child-component .image img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .child-component .text {
+    flex: 1;
+    padding: 20px;
+    text-align: left;
+
+  }
+
+  .child-component .text p {
+    font-size: 20px;
+    margin: 0;
+
+  }
+
+  .child-component:hover {
+    background-color: #D2E0FB; /* Customize the hover background color */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow on hover */
+  }
+
+  .child-component:hover .image {
+    background-color: white; /* Customize the image background color on hover */
+  }
+  

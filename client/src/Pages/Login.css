@@ -1,0 +1,81 @@
+
+#heading{
+    font-family: Arial, sans-serif;
+    font-size: 30px;
+    margin-left: 74px;
+    margin-top: 1em;
+    font-style: bold;
+}
+
+.App {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 450px;
+    height: 400px;
+    margin: 0 auto;
+    margin-top: 3em;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #DCD6F7;
+    box-shadow: 5px 5px 10px #000000;
+
+
+  }
+
+  h1 {
+    font-size: 34px;
+    margin-bottom: 20px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+  }
+
+  input {
+    width: 80%;
+    height: 20px;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+
+  }
+
+  button {
+    width: 60%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #FCBAAD;
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 40px;
+  }
+
+  #switch{
+    width: 40%;
+    background-color: #FFFFFF;
+    color: #000000;
+    margin-top: 0px;
+  }
+
+  button:hover {
+    background-color: #A6B1E1;
+  }
+
+  #body{
+    background-color: #A6B1E1;
+     background-image: url('C:\Users\sriva\Downloads\LoginPage Img.jpg'); 
+    background-repeat: no-repeat;
+    background-position: 450px;
+
+
+  }

@@ -1,0 +1,39 @@
+.parent-component {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border: 1px solid green;
+  }
+
+  .child-component {
+    width: 45%;
+    margin: 10px;
+    display: flex;
+    border: 1px solid green;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  .child-component .image {
+    flex: 1;
+    max-width: 50%;
+    padding: 10px;
+  }
+
+  .child-component .image img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .child-component .text {
+    flex: 1;
+    max-width: 50%;
+    padding: 10px;
+    text-align: left;
+  }
+
+  .child-component .text p {
+    font-size: 16px;
+    margin: 0;
+  }
+  

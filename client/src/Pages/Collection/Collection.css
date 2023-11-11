@@ -1,0 +1,97 @@
+/* Collection.css */
+.collectionPage{
+  background-color: #D2E0FB;
+  height: 210em;
+}
+.collection {
+  color: white;
+  width:700px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #4A55A2;
+  align-items: center;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 1s ease-in-out;
+
+}
+
+.drop{
+margin-left:80%;
+margin-bottom:10%;
+
+}
+
+.filter{
+  margin-left: 70%;
+
+}
+
+.deleteBtn{
+width: 40px;
+margin-left: 90%;
+margin-top: 0px;
+margin-bottom: 0px;
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+#tagValue {
+  font-size: 16px;
+  padding: 8px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#ul {
+  list-style: none;
+  padding: 0;
+}
+
+#li {
+  margin-bottom: 16px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 16px;
+  color: black;
+
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transform: translateY(50px); /* Initial position offscreen */
+  animation: slideIn 1.3s ease-in-out forwards; /* Apply the animation */
+}
+
+.heading {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.content {
+  font-size: 16px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

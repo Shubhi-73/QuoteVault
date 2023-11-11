@@ -1,0 +1,83 @@
+
+.faq-page {
+  text-align: center;
+  padding: 20px;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #D2E0FB;
+  display: flex;
+}
+
+/* Header styles */
+.header {
+  background-color: #4A55A2;
+  color: white;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.header h1 {
+  font-size: 24px;
+  width: 80%;
+  align-items: center;
+  justify-content: center;
+}
+
+/* FAQ list styles */
+.faq-list {
+  list-style: none;
+  padding: 0;
+  width: 80%;
+  align-items: center;
+  justify-content: center;
+}
+
+/* FAQ item styles */
+.faq-item {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin: 20px 0;
+  padding: 20px;
+  overflow: hidden;
+
+  text-align: left;
+  background-color: #f5f5f5;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  align-items: center;
+  justify-content: center;
+  transition: height 0.3s ease-in-out;
+}
+
+.faq-item.open {
+  max-height: 500px; /* Adjust the height as needed for your content */
+}
+
+
+.faq-item p {
+  font-size: 16px;
+  margin: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.faq-item h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  align-items: center;
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
+}
+.faq-item h2::after {
+  float: right;
+  transition: transform 0.3s;
+}
+
+.faq-item.open h2::after {
+  transform: rotate(-45deg);
+}
+
+
+/* Add more CSS styles as needed to match your app's design */

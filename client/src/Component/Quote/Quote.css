@@ -1,0 +1,29 @@
+.quote-page {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    text-align: center;
+}
+
+.quote-page h2 {
+    font-size: 24px;
+    margin: 0 0 20px;
+    color: #333;
+}
+
+.quote {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.quote p {
+    font-size: 18px;
+    color: #333;
+}

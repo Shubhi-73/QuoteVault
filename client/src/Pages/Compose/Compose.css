@@ -1,0 +1,67 @@
+.compose-page {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+     background-color: #4A55A2;
+    box-shadow: 2px 2px 4px rgba(74, 85, 162, 2);
+    border-radius: 5px;
+    text-align: center;
+
+}
+
+.compose-page h2 {
+    font-size: 24px;
+    margin: 0 0 20px;
+    color: white;
+}
+
+.compose-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #D2E0FB;
+    /* background-image: url('https://i.pinimg.com/564x/9f/d4/0e/9fd40eb024ae9ba994fe0eed91db1bdf.jpg');
+    background-size: cover; */
+}
+
+.compose-form input
+ {
+    width: 150%;
+    padding: 20px;
+    margin: 5px 0;
+    border: 1px solid #917FB3;
+    border-radius: 10px;
+    outline: none;
+    height: 10px;
+}
+
+.compose-form textarea{
+  width: 150%;
+  padding: 20px;
+  margin: 5px 0;
+  border: 1px solid #917FB3;
+  border-radius: 10px;
+  outline: none;
+}
+
+.compose-form button {
+    background-color: #4A55A2;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.compose-form button:hover {
+    background-color: #7895CB;
+}
+
+.compose{
+ background-color: #D2E0FB;
+  height: 40em;
+   /* background-image: url('https://i.pinimg.com/564x/40/04/3f/40043f47f42804ba6692c8c0215b4501.jpg');
+  background-size: cover; */
+
+}

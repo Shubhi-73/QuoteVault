@@ -1,0 +1,96 @@
+.Home{
+  background-color: #D2E0FB;
+  height: 40em;
+  width: 100%;
+  background: linear-gradient(45deg, #FFC6AC, #4A55A2);
+  background-size: 200% 200%;
+  animation: backgroundAnimation 10s ease infinite;
+  /* D2E0FB */
+
+}
+
+@keyframes backgroundAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+
+
+.welcome {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #D2E0FB;
+  box-shadow: 2px 2px 4px rgba(0, 0, 255, 0.4);
+  border-radius: 10px;
+  border: solid;
+  border-width: 1px;
+  text-align: center;
+  position: relative;
+}
+
+.welcome::before {
+  content: "";
+  display: block;
+  width: 60px; /* Adjust the width and height as needed */
+  height: 60px;
+  background-image: url('https://i.pinimg.com/564x/b6/4a/18/b64a18e25d80b69803430116df920891.jpg');
+  background-size: cover;
+  background-position: left;
+  background-repeat: no-repeat;
+  border-radius: 50%; /* Creates a circular shape */
+  position: absolute;
+  top: -30px; /* Adjust the positioning to your preference */
+  left: calc(10% - 30px); /* Center the circular image horizontally */
+}
+
+#h1 {
+  max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color:  #D2E0FB;
+    box-shadow: 2px 2px 4px rgba(0, 0, 255, 0.4);
+    border-radius: 10px;
+    text-align: center;
+    border-style: solid;
+    border-width: 1px;
+    color:#19376D;
+}
+
+
+
+
+#title{
+  font-size: 28px;
+  color: #19376D;
+  font-style: bold;
+  margin: 10px 0px;
+
+}
+
+#content{
+  font-size: 18px;
+  color: #666;
+  margin: 30px 0;
+}
+
+.special-greeting {
+  font-size: 20px;
+  font-weight: bold;
+  color: #007bff;
+}
+
+
+
+
+
+
+ 
