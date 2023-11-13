@@ -13,7 +13,7 @@ function App() {
 
 
   useEffect(() => {
-    fetch("https://backend-quotevault.onrender.com/home")
+    fetch("http://localhost:8000/home")
       .then((res) => res.json())
       .then((data) => setMessage(data.message))
   }, []);
