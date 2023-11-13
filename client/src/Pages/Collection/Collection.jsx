@@ -34,7 +34,7 @@ const navigate = useNavigate();
   const deleteNote = async(noteId) => {
     try {
         // You can use axios to send the data to your server if needed.
-        const response = await axios.post('http://localhost:8000/deleteData', {noteId});
+        const response = await axios.post('https://backend-quotevault.onrender.com/deleteData', {noteId});
         if(response.status === 200){
           window.location.reload();
           navigate('/Collection');

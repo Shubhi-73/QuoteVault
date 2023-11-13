@@ -12,7 +12,7 @@ const Home = () => {
   const [user, setUser] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:8000/home")
+    fetch("https://backend-quotevault.onrender.com/home");
     .then((response) => response.json())
     .then((data) => {
         setContent(data.content);

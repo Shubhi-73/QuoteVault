@@ -27,7 +27,7 @@ function LoginSignUp() {
     const handleLoginSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8000/sendLoginData', loginData);
+            const response = await axios.post('https://backend-quotevault.onrender.com/sendLoginData', loginData);
             console.log(response.data);
             if(response.status === 200) navigate('/home');
             else{
