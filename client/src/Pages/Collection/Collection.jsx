@@ -24,7 +24,7 @@ function Collection() {
 const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:8000/Collection")
+    fetch("https://backend-quotevault.onrender.com/Collection")
     .then((response) => response.json())
     .then((data) => setData(data))
     .catch((error) => console.error('Error:', error));
@@ -37,7 +37,7 @@ const navigate = useNavigate();
         const response = await axios.post('https://backend-quotevault.onrender.com/deleteData', {noteId});
         if(response.status === 200){
           window.location.reload();
-          navigate('/Collection');
+          // navigate('/Collection');
         }
         else{
           document.getElementById("demo").innerHTML = "Please try again";
