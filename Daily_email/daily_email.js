@@ -70,6 +70,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 
+app.get('/', (req, res) => {
 const scheduledTask = () => {
 
   let found_note = new Note();
@@ -172,3 +173,8 @@ const scheduledTask = () => {
 }
 
 cron.schedule('24 11 * * *', scheduledTask);
+});
+
+app.listen(4000, () => {
+  console.log(`Server is running on port 8000.`);
+});
