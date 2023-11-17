@@ -6,6 +6,8 @@ const mongoose = require("mongoose");
 const app = express();
 const nodemailer = require("nodemailer")
 const {google} = require("googleapis")
+const cron = require('node-cron');
+
 //const JSONStream = require('JSONStream');
 
 const CLIENT_ID = "226419603487-b7cp7tgrffkiqbv1i288m2sge8666qt9.apps.googleusercontent.com"
@@ -67,98 +69,106 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-let found_note = new Note();
-let userList;
 
-User.distinct("email", function(err,allUsers){ //array of all distict users
+const scheduledTask = () => {
 
-  userList = allUsers;
+  let found_note = new Note();
+  let userList;
 
 
-console.log("This is the list of users");
-console.log(userList);
+  User.distinct("email", function(err,allUsers){ //array of all distict users
 
-//iterate through the array of distinct users
-for(let i = 0; i< userList.length; i++){
+    userList = allUsers;
 
-  userName = allUsers[i];
 
-User.find({email: userName},{emailId: 1}, function(err, mailId){ //find the mailID of the user
+  console.log("This is the list of users");
+  console.log(userList);
 
-//find 1 random document of that user
-  Note.aggregate([{$match: {user:allUsers[i]}},{$sample: {size: 1}}], function(err, foundNote)
-     {
-       if(!err) {
-       let currentDate = new Date().toJSON().slice(0, 10);
-       console.log(currentDate); // "2022-06-17"
-       console.log(userName);
-       console.log(foundNote[0].book);
-        //saving today's quote
-       const newQuote = new Quote({
-         user: foundNote[0].user,
-         date: currentDate,
-         book: foundNote[0].book,
-         content: foundNote[0].content,
-         tag: foundNote[0].tag
-       });
+  //iterate through the array of distinct users
+  for(let i = 0; i< userList.length; i++){
 
-       newQuote.save(function(err){
+    userName = allUsers[i];
 
-         if(err){
-           console.log("error in saving dailyQuote")
-         }
+  User.find({email: userName},{emailId: 1}, function(err, mailId){ //find the mailID of the user
 
-        });
-      if (!err)
-      {
-        //where home render was here
-        //sending a mail through API
-        async function sendMail()
+  //find 1 random document of that user
+    Note.aggregate([{$match: {user:allUsers[i]}},{$sample: {size: 1}}], function(err, foundNote)
+       {
+         if(!err) {
+         let currentDate = new Date().toJSON().slice(0, 10);
+         console.log(currentDate); // "2022-06-17"
+         console.log(userName);
+         console.log(foundNote[0].book);
+          //saving today's quote
+         const newQuote = new Quote({
+           user: foundNote[0].user,
+           date: currentDate,
+           book: foundNote[0].book,
+           content: foundNote[0].content,
+           tag: foundNote[0].tag
+         });
+
+         newQuote.save(function(err){
+
+           if(err){
+             console.log("error in saving dailyQuote")
+           }
+
+          });
+        if (!err)
         {
-          try
+          //where home render was here
+          //sending a mail through API
+
+          async function sendMail()
           {
-              const accessToken = await oAuth2Client.getAccessToken();
+            try
+            {
+                const accessToken = await oAuth2Client.getAccessToken();
 
-              const transport = nodemailer.createTransport(
-              {
-                  service: 'gmail',
-                  auth:
-                  {
-                      type: 'OAuth2',
-                      user: 'srivastava.snigdha519@gmail.com',
-                      clientId: CLIENT_ID,
-                      clientSecret: CLIENT_SECRET,
-                      refreshToken: REFRESH_TOKEN,
-                      accessToken: accessToken,
-                  },
-              });
+                const transport = nodemailer.createTransport(
+                {
+                    service: 'gmail',
+                    auth:
+                    {
+                        type: 'OAuth2',
+                        user: 'srivastava.snigdha519@gmail.com',
+                        clientId: CLIENT_ID,
+                        clientSecret: CLIENT_SECRET,
+                        refreshToken: REFRESH_TOKEN,
+                        accessToken: accessToken,
+                    },
+                });
 
-              const mailOptions =
-              {
-                from: 'Readwise <srivastava.snigdha519@gmail.com>',
-                to: mailId,
-                subject: 'Quote of the day!',
-                text: 'Hello from the other side',
-                html: '<div style="background-color: #95D1CC;text-align: center;padding: 1em; border-radius: 25% 10%; font: Roboto;">'+'<h2>'+foundNote[0].book+'</h2><h3 style="font-style: italic;">'+foundNote[0].content+'</h3></div>'
-              }
+                const mailOptions =
+                {
+                  from: 'Readwise <srivastava.snigdha519@gmail.com>',
+                  to: mailId,
+                  subject: 'Quote of the day!',
+                  text: 'Hello from the other side',
+                  html: '<div style="background-color: #95D1CC;text-align: center;padding: 1em; border-radius: 25% 10%; font: Roboto;">'+'<h2>'+foundNote[0].book+'</h2><h3 style="font-style: italic;">'+foundNote[0].content+'</h3></div>'
+                }
 
-              const result = await transport.sendMail(mailOptions);
-              console.log("reached till send mail");
-              return result;
-          } catch (error)
-          {
-            return error;
-          }
-        } //sendMail()
+                const result = await transport.sendMail(mailOptions);
+                console.log("reached till send mail");
+                return result;
+            } catch (error)
+            {
+              return error;
+            }
+          } //sendMail()
 
-        sendMail()
-        .then((result) => console.log('Email sent...', result))
-        .catch((error) => console.log(error.message));
+          sendMail()
+          .then((result) => console.log('Email sent...', result))
+          .catch((error) => console.log(error.message));
 
-      } //if(!err)
-    }
-  });
+        } //if(!err)
+      }
+    });
 
+    });
+  }
   });
 }
-});
+
+cron.schedule('24 11 * * *', scheduledTask);
