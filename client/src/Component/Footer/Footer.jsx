@@ -24,7 +24,7 @@ const FooterComponent = () => {
         </div>
       </div>
       <div className="footer-bottom">
-        <p>&copy; {new Date().getFullYear()} QuoteVault. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} Made by Sejal, Vishakha, Snigdha</p>
       </div>
     </footer>
   );
