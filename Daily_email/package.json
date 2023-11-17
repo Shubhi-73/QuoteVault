@@ -1,18 +1,13 @@
 {
-    "name": "readwise",
+    "name": "Daily_email",
     "version": "1.0.0",
     "description": "",
-    "main": "app.js",
+    "main": "daily_email.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "webpack --config webpack.config.js"
     },
     "keywords": [],
-    "scripts": {
-      "start": "node server.js",
-      "dev": "node server.js",
-      "build": "npm i"
-    },
     "author": "",
     "license": "ISC",
     "dependencies": {
