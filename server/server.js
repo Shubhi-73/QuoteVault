@@ -101,7 +101,7 @@ app.post('/sendComposeData', async(req, res) => {
       user: userName,
       book: req.body.title,
       content: req.body.description,
-      tag: req.body.tag
+      tag: req.body.tag.toLowerCase()
     } );
     console.log(newNote);
   newNote.save();
