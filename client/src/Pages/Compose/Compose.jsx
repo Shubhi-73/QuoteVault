@@ -65,7 +65,7 @@ function ComposePage() {
 
         try {
             // You can use axios to send the data to your server if needed.
-            const response = await axios.post('https://backend-quotevault.onrender.com/sendComposeData', ComposeFormData);
+            const response = await axios.post('https://back-quotevault.onrender.com/sendComposeData', ComposeFormData);
             if(response.status === 200) navigate('/Collection');
             else{
               document.getElementById("demo").innerHTML = "Please try again"

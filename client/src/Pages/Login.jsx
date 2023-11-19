@@ -27,7 +27,7 @@ function LoginSignUp() {
     const handleLoginSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('https://backend-quotevault.onrender.com/sendLoginData', loginData);
+            const response = await axios.post('https://back-quotevault.onrender.com/sendLoginData', loginData);
             console.log(response.data);
             if(response.status === 200) navigate('/home');
             else{
@@ -47,7 +47,7 @@ function LoginSignUp() {
         e.preventDefault();
 
         try {
-            const response = await axios.post('https://backend-quotevault.onrender.com/sendSignUpData', signupData);
+            const response = await axios.post('https://back-quotevault.onrender.com/sendSignUpData', signupData);
             if(response.status === 200) navigate('/home');
             else {
               navigate('/');

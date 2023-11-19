@@ -24,7 +24,7 @@ function Collection() {
 const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("https://backend-quotevault.onrender.com/Collection")
+    fetch("https://back-quotevault.onrender.com/Collection")
     .then((response) => response.json())
     .then((data) => setData(data))
     .catch((error) => console.error('Error:', error));
@@ -34,7 +34,7 @@ const navigate = useNavigate();
   const deleteNote = async(noteId) => {
     try {
         // You can use axios to send the data to your server if needed.
-        const response = await axios.post('https://backend-quotevault.onrender.com/deleteData', {noteId});
+        const response = await axios.post('https://back-quotevault.onrender.com/deleteData', {noteId});
         if(response.status === 200){
           window.location.reload();
           // navigate('/Collection');
