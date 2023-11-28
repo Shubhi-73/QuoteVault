@@ -13,7 +13,7 @@ const cron = require('node-cron');
 const CLIENT_ID = "226419603487-b7cp7tgrffkiqbv1i288m2sge8666qt9.apps.googleusercontent.com"
 const CLIENT_SECRET= "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"
 const REDIRECT_URI = "https://developers.google.com/oauthplayground"
-const REFRESH_TOKEN = "1//04qCvBiwAfldfCgYIARAAGAQSNwF-L9IrKtvJQjDZvng1C6sNtbcPymTBsOSxxk6-dZ1DShLMsugd27M4MU2-va9OoC4r5WN3t6Y"
+const REFRESH_TOKEN = "1//04_gDnPQscSs1CgYIARAAGAQSNwF-L9IrUbITurSmOURVhn9GT-ggUorE1IfJv8o0jlQLnCnTPtZrFNTklbaWczLkGBPgu9M90uY"
 
 ////////////////////////////////////////////////////////////////
 
@@ -32,6 +32,9 @@ mongoose.connect("mongodb+srv://srivastavasnigdha519:mjQnzizxDENnZQ8G@readone.ew
   useNewUrlParser: true
 });
 
+// mongoose.connect("mongodb+srv://srivastavasnigdha519:mjQnzizxDENnZQ8G@ac-qbvl6nx-shard-00-00.ewtbxdf.mongodb.net:27017,ac-qbvl6nx-shard-00-01.ewtbxdf.mongodb.net:27017,ac-qbvl6nx-shard-00-02.ewtbxdf.mongodb.net:27017/test?retryWrites=true&w=majority", {
+//   useNewUrlParser: true
+// });
 
 // mongoose.connect("mongodb://localhost:27017/ReadwiseDB", {
 //   useNewUrlParser: true
@@ -71,7 +74,7 @@ app.use(bodyParser.urlencoded({
 
 
 
-const scheduledTask = () => {
+//const scheduledTask = () => {
 
   let found_note = new Note();
   let userList;
@@ -159,8 +162,8 @@ const scheduledTask = () => {
             }
           } //sendMail()
 
-          sendMail()
-          .then((result) => console.log('Email sent...', result))
+          sendMail() //returns a promise
+          .then((result) => console.log('Email sent...', result)) //consuming function
           .catch((error) => console.log(error.message));
 
         } //if(!err)
@@ -170,9 +173,9 @@ const scheduledTask = () => {
     });
   }
   });
-}
+//}
 
-cron.schedule('24 11 * * *', scheduledTask);
+//cron.schedule('24 11 * * *', scheduledTask);
 
 
 app.listen(4000, () => {
