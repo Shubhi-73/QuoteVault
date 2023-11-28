@@ -1,7 +1,7 @@
 {
   "scripts": {
     "start": "node daily_email.js",
-    "build": "npm i"
+    "build": "npm i && mkdir -p public"
   },
   "dependencies": {
     "body-parser": "^1.20.2",
