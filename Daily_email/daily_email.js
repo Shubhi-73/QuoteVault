@@ -6,14 +6,14 @@ const mongoose = require("mongoose");
 const app = express();
 const nodemailer = require("nodemailer")
 const {google} = require("googleapis")
-const cron = require('node-cron');
+require('dotenv').config();
 
 //const JSONStream = require('JSONStream');
 
-const CLIENT_ID = "226419603487-b7cp7tgrffkiqbv1i288m2sge8666qt9.apps.googleusercontent.com"
-const CLIENT_SECRET= "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"
-const REDIRECT_URI = "https://developers.google.com/oauthplayground"
-const REFRESH_TOKEN = "1//04_gDnPQscSs1CgYIARAAGAQSNwF-L9IrUbITurSmOURVhn9GT-ggUorE1IfJv8o0jlQLnCnTPtZrFNTklbaWczLkGBPgu9M90uY"
+const CLIENT_ID = process.env.CLIENT_ID;     
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const REDIRECT_URI = process.env.REDIRECT_URI;
+const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
 
 ////////////////////////////////////////////////////////////////
 
@@ -26,20 +26,10 @@ const oAuth2Client = new google.auth.OAuth2(
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
 //establishing a connection to the mongoDB database
-
-
-mongoose.connect("mongodb+srv://srivastavasnigdha519:mjQnzizxDENnZQ8G@readone.ewtbxdf.mongodb.net/ReadwiseDB?retryWrites=true&w=majority", {
-  useNewUrlParser: true
-});
-
-// mongoose.connect("mongodb+srv://srivastavasnigdha519:mjQnzizxDENnZQ8G@ac-qbvl6nx-shard-00-00.ewtbxdf.mongodb.net:27017,ac-qbvl6nx-shard-00-01.ewtbxdf.mongodb.net:27017,ac-qbvl6nx-shard-00-02.ewtbxdf.mongodb.net:27017/test?retryWrites=true&w=majority", {
-//   useNewUrlParser: true
-// });
-
-// mongoose.connect("mongodb://localhost:27017/ReadwiseDB", {
-//   useNewUrlParser: true
-// });
-//
+mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true
+  });
+  
 
 //defining schemas
 const userSchema = {
@@ -73,58 +63,48 @@ app.use(bodyParser.urlencoded({
 }));
 
 
+async function UsersList(){
+    try{
+        allUsers = await User.distinct("email") //array of all distict users
+        return allUsers;
+    }
+    catch(err){
+        console.log(err);
+    }
+   
+}
 
-//const scheduledTask = () => {
 
-  let found_note = new Note();
-  let userList;
+async function getUser(userName){
+    try{
+        const mailId = await User.find({email: userName},{emailId: 1}) //find the mailID of the user
+        return mailId;
+    }
+    catch(err){
+        console.log(err);
+    }
+  
+}
 
+       
+function saveQuote(foundNote,userName){   
+        let currentDate = new Date().toJSON().slice(0, 10); // "2022-06-17"
 
-  User.distinct("email", function(err,allUsers){ //array of all distict users
+        //saving today's quote
+        const newQuote = new Quote({
+            user: foundNote[0].user,
+            date: currentDate,
+            book: foundNote[0].book,
+            content: foundNote[0].content,
+            tag: foundNote[0].tag
+        });
 
-    userList = allUsers;
+        newQuote.save();
+   }
+           
+       
 
-
-  console.log("This is the list of users");
-  console.log(userList);
-
-  //iterate through the array of distinct users
-  for(let i = 0; i< userList.length; i++){
-
-    userName = allUsers[i];
-
-  User.find({email: userName},{emailId: 1}, function(err, mailId){ //find the mailID of the user
-
-  //find 1 random document of that user
-    Note.aggregate([{$match: {user:allUsers[i]}},{$sample: {size: 1}}], function(err, foundNote)
-       {
-         if(!err) {
-         let currentDate = new Date().toJSON().slice(0, 10);
-         console.log(currentDate); // "2022-06-17"
-         console.log(userName);
-         console.log(foundNote[0].book);
-          //saving today's quote
-         const newQuote = new Quote({
-           user: foundNote[0].user,
-           date: currentDate,
-           book: foundNote[0].book,
-           content: foundNote[0].content,
-           tag: foundNote[0].tag
-         });
-
-         newQuote.save(function(err){
-
-           if(err){
-             console.log("error in saving dailyQuote")
-           }
-
-          });
-        if (!err)
-        {
-          //where home render was here
-          //sending a mail through API
-
-          async function sendMail()
+async function sendMail(mailId,foundNote)
           {
             try
             {
@@ -158,26 +138,47 @@ app.use(bodyParser.urlencoded({
                 return result;
             } catch (error)
             {
+              console.log(error);
               return error;
             }
           } //sendMail()
 
-          sendMail() //returns a promise
-          .then((result) => console.log('Email sent...', result)) //consuming function
-          .catch((error) => console.log(error.message));
+async function main(){
 
-        } //if(!err)
-      }
-    });
-
-    });
-  }
-  });
-//}
-
-//cron.schedule('24 11 * * *', scheduledTask);
+            //getting list of users
+            const userList = await UsersList();
+            console.log(userList);
 
 
+            //iterating through each user 
+            for(let i = 0; i<userList.length; i++){
+
+              let userName = userList[i];
+              console.log("userName"+userName);
+              let userEmail = await getUser(userName);
+        
+              //finding one random document
+              let foundNote = await Note.aggregate([{$match: {user:userName}},{$sample: {size: 1}}])
+              console.log("NOTE FOUND"+ foundNote);
+
+
+              //saving today's quote in a new collection for home to render
+              saveQuote(foundNote,userName);
+        
+              //send mail to that user
+              sendMail(userEmail,foundNote) //returns a promise
+              .then((result) => console.log('Email sent...', result)) //consuming function
+              .catch((error) => console.log(error.message));
+            
+            }
+        
+        
+        }
+
+ main().then(() => {
+         console.log('main completed.');
+});
+        
 app.listen(4000, () => {
   console.log(`Server is running on port 8000.`);
 });
