@@ -1,14 +1,13 @@
 {
+
   "scripts": {
-    "start": "node daily_email.js",
-    "build": "npm i && mkdir -p public"
+    "start": "node server.js",
+    "build": "npm i"
   },
   "dependencies": {
-    "body-parser": "^1.20.2",
     "express": "^4.18.2",
-    "googleapis": "^128.0.0",
-    "mongoose": "^5.0.0",
-    "node-cron": "^3.0.3",
-    "nodemailer": "^6.9.7"
+    "mongoose": "^8.0.3"
   }
+  
 }
+
