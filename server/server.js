@@ -1,7 +1,5 @@
 const express = require('express');
-const cors = require('cors');
 const app = express();
-const { MongoClient, ServerApiVersion } = require('mongodb');
 
 /////database connection///
 const mongoose = require("mongoose");
@@ -35,7 +33,6 @@ const Quote = mongoose.model("Quote", dailyQuoteSchema); //singular version of t
 const Note = mongoose.model("Note", noteSchema); //singular version of the collection
 const User = mongoose.model("User", userSchema); //singular version of the collection
 
-app.use(cors());
 app.use(express.json());
 let userName = "user1";
 let foundNote;
@@ -44,58 +41,64 @@ let list;
 let tags;
 
 
-app.get('/home', (req, res) => {
-  let currentDate = new Date().toJSON().slice(0, 10);
-  let passContent;
-  let passBook;
-Quote.find({user: userName, date: currentDate}, function(err, todayQuote){ //find the mailID of the user
-//in the event that the daily mail code didn't run
-  if (todayQuote.length === 0) {
-      console.log("length is 0");
-       passContent = "Nothing is as good or bad as it seems - NYU prof. Scott Galloway";
-       passBook = "Psychology of Money";
+app.get('/home', async (req, res) => 
+{
+  try{
+      let currentDate = new Date().toJSON().slice(0, 10);
+      let passContent;
+      let passBook;
+      const todayQuote = await Quote.find({user: userName, date: currentDate}); //find the mailID of the user
+    //in the event that the daily mail code didn't run
+      if (todayQuote.length === 0) {
+          console.log("length is 0");
+          passContent = "Nothing is as good or bad as it seems - NYU prof. Scott Galloway";
+          passBook = "Psychology of Money";
 
-    } else {
+        } else {
 
- passContent = todayQuote[0].content;
- passBook = todayQuote[0].book;
-//res.json(todayQuote[0]);
-    }
-    res.json({content: passContent ,book: passBook ,message: userName});
-
-
+    passContent = todayQuote[0].content;
+    passBook = todayQuote[0].book;
+    //res.json(todayQuote[0]);
+        }
+        res.json({content: passContent ,book: passBook ,message: userName});
+  }
+  catch(err){
+    console.error('Error fetching note:', err);
+    res.status(500).json({ error: 'Failed to retrieve user note' });
+  }
 });
 
-});
 
 
-
-app.get('/Collection', (req, res) => {
-  Note.find({user: userName,}, function(err, list){
+app.get('/Collection', async (req, res) => {
+  try{
+    const list = await Note.find({user: userName});
     res.json(list);
     console.log(list);
-  });
-  //redirecting to the allHighlights page
+  }
+  catch(err){
+    console.error('Error fetching notes:', err);
+
+    res.status(500).json({ error: 'Failed to retrieve notes' });
+  }
 });
 
 
 app.post('/deleteData', async(req, res) => {
-
-const idOfNoteToBeDeleted = req.body;
-
-Note.deleteOne({user: userName, _id: idOfNoteToBeDeleted.noteId}, function(err, check){
-console.log("Successfully deleted");
-res.status(200).json({message: "deleted successfully"});
+try{
+  const idOfNoteToBeDeleted = req.body;
+  const check = await Note.deleteOne({user: userName, _id: idOfNoteToBeDeleted.noteId});
+  console.log("Successfully deleted");
+  res.status(200).json({message: "deleted successfully"});
+}
+catch(err){
+  console.error('Error fetching notes:', err);
+  res.status(500).json({ error: 'Failed to retrieve notes' });
+}
 });
-
-});
-
-
-
 
 
 app.post('/sendComposeData', async(req, res) => {
-
   const newNote = new Note(
     {
       user: userName,
@@ -107,19 +110,15 @@ app.post('/sendComposeData', async(req, res) => {
   newNote.save();
 res.status(200).json({message: "saved successfully"});
 });
-app.post('/sendLoginData', async(req, res) => {
 
+
+app.post('/sendLoginData', async(req, res) => {
+try{
 userName = req.body.username;
-//console.log("This is the user");
-//console.log(userName);
 password = req.body.password;
 
-  User.findOne({email: userName}, function(err, foundUser){
+  const foundUser = await User.findOne({email: userName});
 
-  if(err){
-    console.log("error at finding user"+err);
-  }
-  else{
     if(foundUser){
       if(foundUser.password === password){
         console.log("PASSWORD MATCHED")
@@ -132,11 +131,15 @@ password = req.body.password;
       }
     }
     else{ //incorrect email
-
+      console.log("INCORRECT EMAIL")
     }
   }
 
-  });
+  catch(err){
+    console.error('Error fetching notes:', err);
+    res.status(500).json({ error: 'Failed to retrieve notes' });
+  }
+
 });
 
 app.post('/sendSignUpData', async(req, res) => {
@@ -184,8 +187,6 @@ note3.save();
  res.status(200).json({message: "Success"})
 
 });
-
-
 
 
 app.listen(8000, () => {
