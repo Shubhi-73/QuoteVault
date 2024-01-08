@@ -142,8 +142,10 @@ async function sendMail(mailId,foundNote)
               return error;
             }
           } //sendMail()
+          
+app.get('/run', async (req, res) => 
+{
 
-async function main(){
 
             //getting list of users
             const userList = await UsersList();
@@ -151,7 +153,8 @@ async function main(){
 
 
             //iterating through each user 
-            for(let i = 0; i<userList.length; i++){
+            for(let i = 0; i<userList.length; i++)
+            {
 
               let userName = userList[i];
               console.log("userName"+userName);
@@ -173,12 +176,9 @@ async function main(){
             }
         
         
-        }
-
- main().then(() => {
-         console.log('main completed.');
+       
 });
-        
+   
 app.listen(4000, () => {
   console.log(`Server is running on port 8000.`);
 });
