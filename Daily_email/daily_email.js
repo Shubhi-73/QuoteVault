@@ -174,6 +174,7 @@ app.get('/run', async (req, res) =>
               .catch((error) => console.log(error.message));
             
             }
+            res.status(200).json({message: "mail sent"});
         
         
        
